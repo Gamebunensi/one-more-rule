@@ -7,7 +7,14 @@ import { SuccessDialog } from "./SuccessDialog";
 const RED_TEXT_COLOR = "#e0202d";
 const DEFAULT_TEXT_COLOR = "#071a3d";
 const EMPTY_FORMAT_STATE = Object.freeze({ redCharacterCount: 0 });
-const CLIENT_EMOJIS = ["🔥", "✨", "🚀", "🎉"];
+const CLIENT_TEXT_COLORS = [
+  { label: "红色", value: RED_TEXT_COLOR },
+  { label: "蓝色", value: "#1d4ed8" },
+  { label: "绿色", value: "#138550" },
+  { label: "紫色", value: "#7e22ce" },
+  { label: "橙色", value: "#ea580c" },
+];
+const CLIENT_EMOJIS = ["🔥", "✨", "🚀", "🎉", "❤️", "😄", "😂", "👍", "👏", "💡", "🌟", "🍀", "🐱", "🌈", "🎯", "💯"];
 
 const readEditorText = (editor) => editor.innerText.replace(/\r/gu, "");
 
@@ -116,7 +123,7 @@ export function GameScreen({ game, onHome, onComplete }) {
     rememberSelection();
   };
 
-  const applyTextColor = (color) => {
+  const applyTextColor = (color, label) => {
     const editor = inputRef.current;
     const range = restoreSelection();
     if (!editor || !range || range.collapsed || !range.toString().trim()) {
@@ -132,7 +139,7 @@ export function GameScreen({ game, onHome, onComplete }) {
     if (selection?.rangeCount) savedRangeRef.current = selection.getRangeAt(0).cloneRange();
 
     syncRichEditor();
-    setToolNotice(color === RED_TEXT_COLOR ? "已把选中文字标为红色。" : "已恢复为默认文字颜色。");
+    setToolNotice(label ? `已把选中文字标为${label}。` : "已清除选中文字的颜色。");
   };
 
   const insertTextAtCaret = (text) => {
@@ -298,11 +305,26 @@ export function GameScreen({ game, onHome, onComplete }) {
               {colorToolUnlocked && (
                 <div className="editor-tool-group">
                   <span className="editor-tool-label">文字颜色</span>
-                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyTextColor(RED_TEXT_COLOR)}>
-                    <span className="red-swatch" aria-hidden="true" /> 标为红色
-                  </button>
-                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyTextColor(DEFAULT_TEXT_COLOR)}>
-                    恢复默认
+                  {CLIENT_TEXT_COLORS.map((color) => (
+                    <button
+                      type="button"
+                      className={color.value === RED_TEXT_COLOR ? "required-color" : ""}
+                      key={color.value}
+                      aria-label={`标为${color.label}`}
+                      title={color.value === RED_TEXT_COLOR ? "标为红色（当前规则需要）" : `标为${color.label}`}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => applyTextColor(color.value, color.label)}
+                    >
+                      <span className="color-swatch" style={{ backgroundColor: color.value }} aria-hidden="true" /> {color.label}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    aria-label="清除所选文字颜色"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => applyTextColor(DEFAULT_TEXT_COLOR, "")}
+                  >
+                    清除颜色
                   </button>
                   {formatState.redCharacterCount > 0 && <span className="format-count">已标红 {formatState.redCharacterCount} 字</span>}
                 </div>

@@ -513,12 +513,16 @@ textarea:focus-visible,
   transform: translateY(-1px);
 }
 
-.red-swatch {
+.color-swatch {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: var(--red);
   box-shadow: 0 0 0 1px rgba(7, 26, 61, 0.15);
+}
+
+.editor-tool-group button.required-color {
+  border-color: rgba(224, 32, 45, 0.55);
+  background: var(--red-soft);
 }
 
 .format-count {
