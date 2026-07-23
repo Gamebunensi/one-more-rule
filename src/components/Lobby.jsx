@@ -30,7 +30,11 @@ export function Lobby({ games, completedGames, onSelect }) {
               </span>
               {completedGames.includes(game.id) && <span className="completed-mark"><Icon name="check" size={17} /> 已通关</span>}
               <span className="row-action">
-                {game.startLabel} <Icon name="arrow" size={22} />
+                <span className="row-action-label">
+                  <span className="row-action-default">{game.startLabel}</span>
+                  <span className="row-action-hover" aria-hidden="true">Go Go Go</span>
+                </span>
+                <Icon name="arrow" size={22} />
               </span>
             </button>
           ))}

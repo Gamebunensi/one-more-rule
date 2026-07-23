@@ -309,18 +309,74 @@ textarea:focus-visible,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  min-height: 52px;
+  justify-self: end;
+  gap: 14px;
+  width: 176px;
+  height: 56px;
+  padding: 0 18px;
   border: 1px solid var(--ink);
   border-radius: 5px;
   font-family: var(--serif);
   font-size: 18px;
   font-weight: 800;
+  white-space: nowrap;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+}
+
+.row-action-label {
+  display: grid;
+  min-width: 82px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.row-action-label > span {
+  grid-area: 1 / 1;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.row-action-hover {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.row-action svg {
+  flex: none;
+  transition: transform 160ms ease;
 }
 
 .game-row.featured .row-action {
   border-color: var(--red);
   color: var(--red);
+}
+
+.game-row:hover .row-action,
+.game-row:focus-visible .row-action {
+  border-color: var(--red);
+  color: white;
+  background: var(--red);
+  box-shadow: 0 7px 18px rgba(224, 32, 45, 0.2);
+}
+
+.game-row:hover .row-action-default,
+.game-row:focus-visible .row-action-default {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.game-row:hover .row-action-hover,
+.game-row:focus-visible .row-action-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-row:hover .row-action svg,
+.game-row:focus-visible .row-action svg {
+  transform: translateX(5px);
+}
+
+.game-row:active .row-action {
+  transform: translateY(1px) scale(0.98);
 }
 
 .lobby-footer,
@@ -936,7 +992,8 @@ kbd {
   }
 
   .row-action {
-    min-width: 165px;
+    width: 165px;
+    height: 52px;
     padding: 0 15px;
   }
 
@@ -1051,10 +1108,16 @@ kbd {
   }
 
   .row-action {
-    min-width: 0;
-    min-height: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
     border: 0;
-    font-size: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .row-action-label {
+    display: none;
   }
 
   .row-action svg {
