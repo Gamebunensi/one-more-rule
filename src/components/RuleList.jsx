@@ -1,6 +1,6 @@
 import { Icon } from "./Icons";
 
-export function RuleList({ game, value, unlocked }) {
+export function RuleList({ game, value, formatState, unlocked }) {
   const visibleCount = Math.min(game.rules.length, unlocked + 3);
 
   return (
@@ -9,7 +9,7 @@ export function RuleList({ game, value, unlocked }) {
       <ol className="rule-list">
         {game.rules.slice(0, visibleCount).map((rule, index) => {
           const isUnlocked = index < unlocked;
-          const passed = isUnlocked && rule.test(value);
+          const passed = isUnlocked && rule.test(value, formatState);
           const isCurrent = index === unlocked - 1;
           const status = !isUnlocked ? "locked" : passed ? "passed" : "failed";
 

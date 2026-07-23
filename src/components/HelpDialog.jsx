@@ -32,6 +32,7 @@ export function HelpDialog({ open, onClose }) {
         <ol>
           <li>所有已经出现的要求必须同时保持通过。</li>
           <li>新要求可能让你不得不推翻刚才的写法。</li>
+          <li>需要颜色或表情时，对应的编辑工具会随规则一起解锁。</li>
           <li><kbd>Enter</kbd> 提交，<kbd>Shift</kbd> + <kbd>Enter</kbd> 换行。</li>
           <li>卡住时可以查看当前红色要求下面的提示。</li>
         </ol>
